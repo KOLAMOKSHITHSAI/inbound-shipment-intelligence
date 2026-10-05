@@ -29,3 +29,26 @@
 
 ### Exact next step
 Phase 2: Dataset design. Learn row, column, feature, target, and identifier, then go through which fields are unavailable at prediction time.
+
+## Checkpoint 2 (2026-10-04)
+
+**Current phase:** Phase 2 (Dataset design), concepts mostly done. Phase 0 complete.
+
+### Concepts I understand
+- Row = one shipment. Column = one piece of information.
+- Column roles: identifier (`shipment_id`, `asn_id`), feature (`carrier`, `weather_condition`, `receiving_backlog`), target (`delay_flag`, `delay_duration_hours`)
+- Data leakage: `actual_arrival_time` can't be a feature because it is unknown when we predict. It contains the answer: actual minus scheduled equals the delay.
+- The leakage test: would we know this value at the moment we make the prediction?
+- Column kinds: numerical, categorical, datetime. Binary 0/1 flags are categorical but usable as numbers.
+- Missing data: drop, fill (median for numbers, robust to outliers), or flag. Missingness can itself be a signal.
+
+### Concepts I struggled with
+- Point-in-time values: I picked the receiving backlog at arrival time instead of at prediction time. Revisit in Phase 5.
+- Forecast vs. actual: weather and traffic must be what was known (forecast) when predicting.
+
+### Open questions
+- Use the existing synthetic CSV (about 5,000 rows, 32 columns), or write my own generator?
+- Fill values like the median must come from training data only. To be explained in Phase 5.
+
+### Exact next step
+Decide on the dataset, then Phase 3: load the CSV with pandas and explore it. This is where `requirements.txt` gets created.
